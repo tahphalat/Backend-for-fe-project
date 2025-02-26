@@ -11,7 +11,7 @@ exports.protect = async (req, res, next) => {
     }
 
     //Make sure token exists
-    if (!token || token== 'null') {
+    if (!token || token == 'null') {
         return res.status(401).json({ success: false, msg: 'Not authorized to access this route' });
     }
 
@@ -38,4 +38,4 @@ exports.authorize = (...roles) => {
         }
         next();
     };
-} 
+}

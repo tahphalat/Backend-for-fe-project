@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 exports.register = async (req, res, next) => {
     try {
-        const { name,telephone_number, email, password, role } = req.body;
+        const { name, telephone_number, email, password, role } = req.body;
         //Create user
         const user = await User.create({
             name,
@@ -52,7 +52,7 @@ exports.login = async (req, res, next) => {
         return res.status(401).json({ success: false, msg: 'Cannot convert email or password to string' });
     }
 
-};  
+};
 
 //get token from model, create cookie and send response
 const sentTokenResponse = (user, statusCode, res) => {
@@ -88,4 +88,4 @@ exports.logout = async (req, res, next) => {
         success: true,
         data: {}
     });
-}; 
+};

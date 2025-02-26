@@ -1,0 +1,63 @@
+@startuml
+
+class User {
+  + userId: ObjectId
+  + name: String
+  + telephone_number: String
+  + email: String
+  + password: String
+  + role: String
+  + createdAt: Date
+  + updatedAt: Date
+}
+
+class Car {
+  + carId: ObjectId
+  + name: String
+  + brand: String
+  + model: String
+  + year: Number
+  + pricePerDay: Number
+  + description: String
+  + images: [String]
+  + availability: Boolean
+  + location: String
+  + createdAt: Date
+  + updatedAt: Date
+}
+
+class Booking {
+  + bookingId: ObjectId
+  + userId: ObjectId
+  + carId: ObjectId
+  + startDate: Date
+  + endDate: Date
+  + totalCost: Number
+  + status: String
+  + paymentStatus: String
+  + createdAt: Date
+  + updatedAt: Date
+}
+
+class Auth {
+    + register()
+    + login()
+    + getMe()
+    + logout()
+}
+
+class Middleware {
+    + protect()
+    + authorize(role)
+}
+
+Auth --> User : manages
+
+User "1" -- "*" Booking : makes
+Car "1" -- "*" Booking : reserved for
+Middleware --> Auth : secures
+Middleware --> Booking : secures
+Middleware --> Car : secures
+
+@enduml
+
