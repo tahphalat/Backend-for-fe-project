@@ -19,7 +19,7 @@ const CarSchema = new mongoose.Schema({
     toJSON:{virtuals:true},
     toObject:{virtuals:true}
 });
-
+  
 CarSchema.virtual('bookings',{
         ref:'Booking',
         localField:'_id',

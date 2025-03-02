@@ -48,12 +48,12 @@ exports.getBooking = async (req, res, next) => {
             select: 'name address tel'
         });
         if (booking.user.toString() !== req.user.id && req.user.role !== 'admin') {
-            return res.status(401).json({ success: false, message: `User ${req.param.id} is not authorized to update this booking` });
+            return res.status(401).json({ success: false, message: `User ${req.params.id} is not authorized to update this booking` });
         }
         if (!booking) {
             return res.status(200).json({
                 success: false,
-                message: `No booking with the id of ${req.param.id}`
+                message: `No booking with the id of ${req.params.id}`
             });
         }
         res.status(200).json({
@@ -82,7 +82,7 @@ exports.addBooking = async (req, res, next) => {
         req.body.user = req.user.id;
         const existedBookings = await Booking.find({ user: req.user.id });
         if (existedBookings.length >= 3 && req.user.role !== 'admin') {
-            return res.status(400).json({ success: false, message: `The user with ID ${req.param.id} has already made 3 bookings` });
+            return res.status(400).json({ success: false, message: `The user with ID ${req.params.id} has already made 3 bookings` });
         }
         const booking = await Booking.create(req.body);
         res.status(200).json({
@@ -109,7 +109,7 @@ exports.updateBooking = async (req, res, next) => {
         }
 
         if (booking.user.toString() !== req.user.id && req.user.role !== 'admin') {
-            return res.status(401).json({ success: false, message: `User ${req.param.id} is not authorized to update this booking` });
+            return res.status(401).json({ success: false, message: `User ${req.params.id} is not authorized to update this booking` });
         }
         booking = await Booking.findByIdAndUpdate(req.params.id, req.body, {
             new: true,

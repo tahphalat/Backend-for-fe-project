@@ -1,0 +1,22 @@
+@startuml Car Management Use Case Diagram
+
+title "Car Management Use Case Diagram"
+
+actor "User" as user
+actor "Admin" as admin
+
+rectangle "Car Management" {
+    usecase "Get All Cars" as UC_GetAllCars
+    usecase "Get One Car" as UC_GetOneCar
+    usecase "Create New Car" as UC_CreateCar
+    usecase "Update Car" as UC_UpdateCar
+    usecase "Delete Car" as UC_DeleteCar
+}
+
+user -up-> UC_GetAllCars
+user -up-> UC_GetOneCar
+admin -down-> UC_CreateCar
+admin -down-> UC_UpdateCar
+admin -down-> UC_DeleteCar
+
+@enduml

@@ -1,0 +1,28 @@
+@startuml Booking Management Use Case Diagram
+
+title "Booking Management Use Case Diagram"
+
+actor "User" as user
+actor "Admin" as admin
+
+rectangle "Booking Management" {
+    usecase "Get All Bookings" as UC_GetAllBookings
+    usecase "Get All Bookings For Car" as UC_GetBookingsForCar
+    usecase "Get One Booking" as UC_GetOneBooking
+    usecase "Create New Booking" as UC_CreateBooking
+    usecase "Update Booking" as UC_UpdateBooking
+    usecase "Delete Booking" as UC_DeleteBooking
+}
+
+user -up-> UC_GetAllBookings
+user -up-> UC_GetBookingsForCar
+user -up-> UC_GetOneBooking
+user -up-> UC_CreateBooking
+user -up-> UC_UpdateBooking
+user -up-> UC_DeleteBooking
+
+admin -down-> UC_GetAllBookings
+admin -down-> UC_GetBookingsForCar
+admin -down-> UC_GetOneBooking
+
+@enduml
