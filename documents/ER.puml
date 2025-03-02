@@ -1,63 +1,120 @@
 @startuml
 
-class User {
-  + userId: ObjectId
-  + name: String
-  + telephone_number: String
-  + email: String
-  + password: String
-  + role: String
-  + createdAt: Date
-  + updatedAt: Date
+class "<<Representation>>\nUser" {
+  - userId: ObjectId
+  - name: String
+  - telephone_number: String
+  - email: String
+  - password: String
+  - role: String
+  - createdAt: Date
 }
 
-class Car {
-  + carId: ObjectId
-  + name: String
-  + brand: String
-  + model: String
-  + year: Number
-  + pricePerDay: Number
-  + description: String
-  + images: [String]
-  + availability: Boolean
-  + location: String
-  + createdAt: Date
-  + updatedAt: Date
+class "<<Representation>>\nCar" {
+  - carId: ObjectId
+  - name: String
+  - tel: String
 }
 
-class Booking {
-  + bookingId: ObjectId
-  + userId: ObjectId
-  + carId: ObjectId
-  + startDate: Date
-  + endDate: Date
-  + totalCost: Number
-  + status: String
-  + paymentStatus: String
-  + createdAt: Date
-  + updatedAt: Date
+class "<<Representation>>\nBooking" {
+  - apptDate: Date
+  - user: ObjectId
+  - car: ObjectId
+  - createdAt: Date
 }
 
-class Auth {
-    + register()
-    + login()
-    + getMe()
-    + logout()
+
+class "<<Application>>\nRentalCarService"{
+
 }
 
-class Middleware {
-    + protect()
-    + authorize(role)
+' -----------------------------------------------------
+class "<<Resource>>\nAuth"{
+
 }
 
-Auth --> User : manages
+  ' <<GET>> +register(): user
+  ' <<PUT>> +login(): user
+  ' <<DELETE>> +logout(): void
+  ' <<GET>> +getMe():user
+  
 
-User "1" -- "*" Booking : makes
-Car "1" -- "*" Booking : reserved for
-Middleware --> Auth : secures
-Middleware --> Booking : secures
-Middleware --> Car : secures
+class "<<Resource>>\nRegister" {
+  <<POST>> +register(): user
+}
+
+class "<<Resource>>\nLogin"{
+  <<POST>> +login(): user
+}
+
+class "<<Resource>>\nGetMe"{
+  <<GET>> +getMe(): user
+}
+
+class "<<Resource>>\nLogout"{
+  <<GET>> +logout(): void
+}
+
+class "<<Resource>>\nBookings" {
+  <<GET>> +getBookings(): booking
+  
+}
+
+class "<<Resource>>\nBooking" as Booking1{
+  <<POST>> +addBooking(): booking
+}
+
+class "<<Resource>>\nBooking" as Booking2{
+  <<GET>> +getBooking(): booking
+  <<PUT>> +updateBooking(): booking
+  <<DELETE>> +deleteBooking(): void
+}
+
+class "<<Resource>>\ncars"{
+  <<GET>> +getCars(): car
+  <<POST>> +createCar(): car
+}
+
+class "<<Resource>>\ncar"{
+  <<GET>> +getCar(): car
+  <<PUT>> +updateCar(): car
+  <<DELETE>> +deleteCar(): void
+}
+
+
+'-----------------------------------------------------------
+
+"<<Application>>\nRentalCarService" ..> "<<Resource>>\ncars" : "/cars\n<Path>"
+"<<Application>>\nRentalCarService" ..> "<<Resource>>\nAuth" : "/auth\n<Path>"
+"<<Application>>\nRentalCarService" ..> "<<Resource>>\nBookings" : "/booking\n<Path>"
+
+"<<Resource>>\ncars" ..> "<<Resource>>\ncar" : "/{carId}\n<Path>"
+"<<Resource>>\ncars" ..> "<<Representation>>\nCar" : "<Use>"
+
+"<<Resource>>\ncar" ..> Booking1 : "/bookings\n<Path>"
+"<<Resource>>\ncar" ..> "<<Representation>>\nCar" : "<Use>"
+
+Booking1 ..> "<<Representation>>\nBooking" : "<Use>"
+
+"<<Resource>>\nAuth" ..> "<<Resource>>\nRegister" : "/register\n<Path>"
+"<<Resource>>\nAuth" ..> "<<Resource>>\nLogin" : "/login\n<Path>"
+"<<Resource>>\nAuth" ..> "<<Resource>>\nGetMe" : "/me\n<Path>"
+"<<Resource>>\nAuth" ..> "<<Resource>>\nLogout" : "/logout\n<Path>"
+
+"<<Resource>>\nRegister" ..> "<<Representation>>\nUser" : "<Use>"
+"<<Resource>>\nLogin" ..> "<<Representation>>\nUser" : "<Use>"
+"<<Resource>>\nGetMe" ..> "<<Representation>>\nUser" : "<Use>"
+"<<Resource>>\nLogout" ..> "<<Representation>>\nUser" : "<Use>"
+
+"<<Resource>>\nBookings" ..> Booking2 : "/bookingId\n<Path>"
+"<<Resource>>\nBookings" ..> "<<Representation>>\nBooking" : "<Use>"
+
+Booking2 ..> "<<Representation>>\nBooking" : "<Use>"
+
+
+
+
+
 
 @enduml
 

@@ -1,0 +1,47 @@
+@startuml Manage Booking (GETALL)
+
+header Sample Booking Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Booking (GETALL)"
+
+actor "User" as user
+actor "Admin" as admin
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:bookings" as routerBookings
+participant "<<middleware>>\n:auth" as middlewareAuth
+participant "<<model>>\n:User" as modelUser
+participant "<<controllers>>\n:bookings" as controllersBookings
+participant "<<model>>\n:booking" as modelBookings
+database "<<MongoDB>>\n:bookings" as BookingsDatabase
+database "<<MongoDB>>\n:users" as UsersDatabase
+
+user -> server ++: req.get('/bookings')
+admin -> server ++: req.get('/bookings')
+server -> routerBookings ++: app.use('/bookings', bookings)
+routerBookings -> middlewareAuth ++: protect(token)
+middlewareAuth -> modelUser ++: findById(decode.id)
+modelUser --> UsersDatabase ++: findById(decode.id)
+modelUser <-- UsersDatabase --: user
+
+middlewareAuth <-- modelUser --:user
+middlewareAuth --> routerBookings --: next()
+
+routerBookings -> controllersBookings ++: getBookings()
+
+alt req.user.role != "admin"
+   controllersBookings -> modelBookings ++: find(req.user.id)
+else req.user.role == "admin"
+    alt req.params.carId
+        controllersBookings -> modelBookings ++: find(req.params.campgroundId)
+    else !req.params.carId
+        controllersBookings -> modelBookings ++: find()
+    end
+end
+
+modelBookings -> BookingsDatabase ++: BookingSchema
+BookingsDatabase --> modelBookings --: booking
+controllersBookings <-- modelBookings --: booking
+controllersBookings -> admin --: response
+controllersBookings -> user --: response
+
+@enduml

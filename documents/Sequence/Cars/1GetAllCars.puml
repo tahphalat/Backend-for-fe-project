@@ -1,0 +1,27 @@
+@startuml Manage Cars (GETALL)
+
+header Sample Booking Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Cars (GETALL)"
+
+actor "User" as user
+actor "Admin" as admin
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:cars" as routerCars
+participant "<<controllers>>\n:cars" as controllersCars
+participant "<<model>>\n:cars" as modelCars
+database "<<MongoDB>>\n:cars" as CarsDatabase
+
+user -> server ++: req.get('/Cars')
+admin -> server ++: req.get('/Cars')
+
+server -> routerCars ++: app.use('/Cars', Cars)
+routerCars -> controllersCars ++: getCar()
+controllersCars -> modelCars ++: find(JSON.parse(JSON.stringfy(req.query)))
+modelCars ->  CarsDatabase ++: CarSchema
+modelCars <-- CarsDatabase --: car
+controllersCars <-- modelCars --: car
+user <- controllersCars --: response
+admin <- controllersCars --: response
+
+@enduml

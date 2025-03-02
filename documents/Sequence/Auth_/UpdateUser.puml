@@ -1,0 +1,49 @@
+@startuml Manage Booking (Update Single)
+
+header Sample Booking Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Booking (Update Single)"
+
+' --------------------------------------------------------------------
+actor "User" as user
+actor "Admin" as admin
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\n:cars" as routerUsers
+participant "<<middleware>>\n:auth" as middlewareAuth
+participant "<<controllers>>\n:User" as controllersUsers
+participant "<<model>>\n:User" as modelUser
+database "<<MongoDB>>\n:users" as UsersDatabase
+
+' --------------------------------------------------------------------
+user -> server ++: req.put('/users/:userId')
+admin -> server ++: req.put('/users/:userId')
+
+server -> routerUsers ++: app.use('/users', users)
+routerUsers ->middlewareAuth ++: protect(token)
+middlewareAuth -> modelUser ++: findById(decode.id)
+modelUser --> UsersDatabase ++: findById(decode.id)
+modelUser <-- UsersDatabase --: user
+
+middlewareAuth <-- modelUser --:user
+
+routerUsers <-- middlewareAuth --: next()
+
+
+routerUsers -> middlewareAuth ++: authorize("admin","user")
+routerUsers <-- middlewareAuth --: next()
+
+routerUsers -> controllersUsers ++: updateUser()
+
+controllersUsers -> modelUser ++: findByIdAndUpdate(req.params.id,req.body)
+
+modelUser -> UsersDatabase ++: UserSchema
+UsersDatabase --> modelUser --: User
+controllersUsers <-- modelUser --: User
+controllersUsers -> admin --: response
+controllersUsers -> user --: response
+
+
+
+' --------------------------------------------------------------------
+@enduml
+
