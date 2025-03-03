@@ -76,7 +76,7 @@ exports.addBooking = async (req, res, next) => {
         if (!car) {
             return res.status(404).json({
                 success: false,
-                message: `No car with the id of ${req.param.id}`
+                message: `No car with the id of ${req.params.id}`
             });
         }
         req.body.user = req.user.id;
@@ -104,7 +104,7 @@ exports.updateBooking = async (req, res, next) => {
         if (!booking) {
             return res.status(404).json({
                 success: false,
-                message: `No booking with the id of ${req.param.id}`
+                message: `No booking with the id of ${req.params.id}`
             });
         }
 
@@ -133,7 +133,7 @@ exports.deleteBooking = async (req, res, next) => {
         if (!booking) {
             return res.status(404).json({
                 success: false,
-                message: `No booking with the id of ${req.param.id}`
+                message: `No booking with the id of ${req.params.id}`
             });
         }
         if (booking.user.toString() !== req.user.id && req.user.role !== 'admin') {

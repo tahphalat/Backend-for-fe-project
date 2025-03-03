@@ -2,6 +2,7 @@ const User = require('../models/User');
 
 exports.register = async (req, res, next) => {
     try {
+  
         const { name, telephone_number, email, password, role } = req.body;
         //Create user
         const user = await User.create({
@@ -51,15 +52,8 @@ exports.login = async (req, res, next) => {
     } catch (err) {
         return res.status(401).json({ success: false, msg: 'Cannot convert email or password to string' });
     }
-<<<<<<< HEAD
 
 };
-
-=======
- 
-};  
- 
->>>>>>> b01f283d206f35f219566387f209bf88d056148e
 //get token from model, create cookie and send response
 const sentTokenResponse = (user, statusCode, res) => {
     //Create token
