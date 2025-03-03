@@ -36,7 +36,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"user\",\r\n    \"telephone_number\":\"067-7849555\",\r\n    \"email\":\"user12@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"role\":\"user\"\r\n}"
+					"raw": "{\r\n    \"name\":\"user\",\r\n    \"telephone_number\":\"067-7849555\",\r\n    \"email\":\"user15@gmail.com\",\r\n    \"password\": \"12345678\",\r\n    \"role\":\"user\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/v1/auth/register",
@@ -85,7 +85,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"user12@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}"
+					"raw": "{\r\n    \"email\":\"user15@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:5000/api/v1/auth/login",
@@ -233,6 +233,81 @@
 						{
 							"key": "carId",
 							"value": "{{global_car_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Booking Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {\r",
+							"    pm.response.to.have.status(500);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": "JSON Type",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"apptDate\": \"2021-01-11T17:00:00.000Z\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/v1/cars/:carId/bookings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"cars",
+						":carId",
+						"bookings"
+					],
+					"variable": [
+						{
+							"key": "carId",
+							"value": ""
 						}
 					]
 				}
