@@ -51,9 +51,9 @@ exports.login = async (req, res, next) => {
     } catch (err) {
         return res.status(401).json({ success: false, msg: 'Cannot convert email or password to string' });
     }
-
+ 
 };  
-
+ 
 //get token from model, create cookie and send response
 const sentTokenResponse = (user, statusCode, res) => {
     //Create token
