@@ -1,8 +1,8 @@
-@startuml Manage Booking (Update Single)
+@startuml Authentication (Update User)
 
 header Sample Booking Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Booking (Update Single)"
+title "Authentication (Update User)"
 
 ' --------------------------------------------------------------------
 actor "User" as user

@@ -1,8 +1,8 @@
-@startuml Manage Booking (Delete ONE Appointment)
+@startuml Manage Booking (Delete One Appointment)
 
 header Sample Booking Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Booking (Delete ONE Appointment)"
+title "Manage Booking (Delete One Appointment)"
 
 ' --------------------------------------------------------------------
 actor "User" as user

@@ -1,8 +1,8 @@
-@startuml Manage Booking (Update Single)
+@startuml Manage Car (Delete One)
 
-header Sample Booking Sequence Diagram
+header Rental Car Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Booking (Update Single)"
+title "Manage Car (Delete One)"
 
 ' --------------------------------------------------------------------
 actor "User" as user

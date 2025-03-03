@@ -1,8 +1,8 @@
-@startuml Manage Booking (GET ALL BOOKINGS FOR CARS)
+@startuml Manage Booking (Get All Bookings For Cars)
 
 header Sample Booking Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Booking (GET ALL BOOKINGS FOR CARS)"
+title "Manage Booking (Get All Booking For Cars)"
 
 ' --------------------------------------------------------------------
 actor "User" as user

@@ -1,8 +1,8 @@
-@startuml Manage Cars (GETALL)
+@startuml Manage Cars (Get All)
 
-header Sample Booking Sequence Diagram
+header Rental Car Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Cars (GETALL)"
+title "Manage Cars (Get All)"
 
 actor "User" as user
 actor "Admin" as admin

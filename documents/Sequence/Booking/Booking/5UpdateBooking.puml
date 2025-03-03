@@ -1,8 +1,8 @@
-@startuml Manage Booking (GET ONE)
+@startuml Manage Booking (Update One Appointment)
 
 header Sample Booking Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Booking (GET ONE)"
+title "Manage Booking (Update One Appointment)"
 
 ' --------------------------------------------------------------------
 actor "User" as user
@@ -17,20 +17,23 @@ database "<<MongoDB>>\n:bookings" as BookingsDatabase
 database "<<MongoDB>>\n:users" as UsersDatabase
 
 ' --------------------------------------------------------------------
-user -> server ++: req.get('/bookings')
-admin -> server ++: req.get('/bookings')
-server -> routerBookings ++: app.use('/bookings', bookings)
+user -> server ++: req.put('/cars/:carId/bookings')
+admin -> server ++: req.put('/cars/:carId/bookings')
+
+server -> routerBookings ++: app.use('/carId/bookings/', bookingRouter)
 routerBookings -> middlewareAuth ++: protect(token)
 middlewareAuth -> modelUser ++: findById(decode.id)
 modelUser -> UsersDatabase ++: findById(decode.id)
 modelUser <-- UsersDatabase --: user
-
 middlewareAuth <-- modelUser --:user
 middlewareAuth --> routerBookings --: next()
 
+routerBookings -> middlewareAuth ++: authorize("admin", "user")
+routerBookings <-- middlewareAuth --: next()
+
 routerBookings -> controllersBookings ++: getBookings()
 
-controllersBookings -> modelBookings ++: find()
+controllersBookings -> modelBookings ++: findByIdAndUpdate(req.params.id,req.body)
 
 modelBookings -> BookingsDatabase ++: BookingSchema
 BookingsDatabase --> modelBookings --: booking

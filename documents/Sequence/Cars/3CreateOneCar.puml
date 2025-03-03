@@ -1,8 +1,8 @@
-@startuml Manage Booking (Update Single)
+@startuml Manage Car (Create Single)
 
-header Sample Booking Sequence Diagram
+header Rental Car Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Booking (Update Single)"
+title "Manage Car (Create Single)"
 
 ' --------------------------------------------------------------------
 actor "User" as user
@@ -17,12 +17,12 @@ database "<<MongoDB>>\n:cars" as CarsDatabase
 database "<<MongoDB>>\n:users" as UsersDatabase
 
 ' --------------------------------------------------------------------
-admin -> server ++: req.put('/cars/:carId')
+admin -> server ++: req.post('/cars')
 
 server -> routerCars ++: app.use('/cars', cars)
 routerCars ->middlewareAuth ++: protect(token)
 middlewareAuth -> modelUser ++: findById(decode.id)
-modelUser -> UsersDatabase ++: findById(decode.id)
+modelUser --> UsersDatabase ++: findById(decode.id)
 modelUser <-- UsersDatabase --: user
 
 middlewareAuth <-- modelUser --:user
@@ -33,9 +33,9 @@ routerCars <-- middlewareAuth --: next()
 routerCars -> middlewareAuth ++: authorize("admin")
 routerCars <-- middlewareAuth --: next()
 
-routerCars -> controllersCars ++: updateCar()
+routerCars -> controllersCars ++: createCar()
 
-controllersCars -> modelCars ++: findByIdAndUpdate(req.params.id,req.body)
+controllersCars -> modelCars ++: create(req.body)
 
 modelCars -> CarsDatabase ++: CarSchema
 CarsDatabase --> modelCars --: car
