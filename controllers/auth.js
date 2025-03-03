@@ -101,7 +101,7 @@ exports.updateUser = async (req, res, next) => {
                 }
         
                 if (user.id.toString() !== req.user.id) {
-                    return res.status(401).json({ success: false, message: `User ${req.params.id} is not authorized to update this booking` });
+                    return res.status(401).json({ success: false, message: `User ${req.params.id} is not authorized to update this user` });
                 }
                 user = await User.findByIdAndUpdate(req.params.id, req.body, {
                     new: true,
@@ -111,7 +111,6 @@ exports.updateUser = async (req, res, next) => {
                     success: true,
                     data: user
                 });
-        res.status(200).json({ success: true, data: user });
     } catch (err) {
         res.status(400).json({ success: false });
     }
