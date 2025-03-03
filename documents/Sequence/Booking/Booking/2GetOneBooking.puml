@@ -28,7 +28,7 @@ modelUser <-- UsersDatabase --: user
 middlewareAuth <-- modelUser --:user
 middlewareAuth --> routerBookings --: next()
 
-routerBookings -> controllersBookings ++: getBookings()
+routerBookings -> controllersBookings ++: getBooking()
 
 controllersBookings -> modelBookings ++: find()
 

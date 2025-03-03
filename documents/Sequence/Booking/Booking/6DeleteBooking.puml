@@ -31,7 +31,7 @@ middlewareAuth --> routerBookings --: next()
 routerBookings -> middlewareAuth ++: authorize("admin", "user")
 routerBookings <-- middlewareAuth --: next()
 
-routerBookings -> controllersBookings ++: getBookings()
+routerBookings -> controllersBookings ++: deleteBooking()
 
 controllersBookings -> modelBookings ++: findById(req.params.id)
 
