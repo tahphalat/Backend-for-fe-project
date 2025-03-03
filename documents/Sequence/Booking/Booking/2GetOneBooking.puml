@@ -30,7 +30,7 @@ middlewareAuth --> routerBookings --: next()
 
 routerBookings -> controllersBookings ++: getBooking()
 
-controllersBookings -> modelBookings ++: find()
+controllersBookings -> modelBookings ++: findById(req.params.id)
 
 modelBookings -> BookingsDatabase ++: BookingSchema
 BookingsDatabase --> modelBookings --: booking
