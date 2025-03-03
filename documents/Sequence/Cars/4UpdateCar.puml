@@ -1,8 +1,8 @@
-@startuml Manage Car (Update Single)
+@startuml Manage Car (Update One)
 
 header Rental Car Sequence Diagram
 footer Page %page% of %lastpage%
-title "Manage Car (Update Single)"
+title "Manage Car (Update One)"
 
 ' --------------------------------------------------------------------
 actor "User" as user
