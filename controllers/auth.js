@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 exports.register = async (req, res, next) => {
     try {
-  
+
         const { name, telephone_number, email, password, role } = req.body;
         //Create user
         const user = await User.create({
@@ -68,7 +68,14 @@ const sentTokenResponse = (user, statusCode, res) => {
         options.secure = true;
     }
 
-    res.status(statusCode).cookie('token', token, options).json({ success: true, token });
+    res.status(statusCode).cookie('token', token, options).json({
+        success: true, _id: user._id,
+        name: user.name,
+        email: user.email,
+        telephone: user.telephone,
+        role: user.role,
+        token
+    });
 };
 
 exports.getMe = async (req, res, next) => {
@@ -92,25 +99,25 @@ exports.logout = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
     try {
         let user = await User.findById(req.params.id);
-        
-            if (!user) {
-                    return res.status(404).json({
-                        success: false,
-                        message: `No user with the id of ${req.param.id}`
-                    });
-                }
-        
-                if (user.id.toString() !== req.user.id) {
-                    return res.status(401).json({ success: false, message: `User ${req.params.id} is not authorized to update this user` });
-                }
-                user = await User.findByIdAndUpdate(req.params.id, req.body, {
-                    new: true,
-                    runValidators: true
-                });
-                res.status(200).json({
-                    success: true,
-                    data: user
-                });
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: `No user with the id of ${req.param.id}`
+            });
+        }
+
+        if (user.id.toString() !== req.user.id) {
+            return res.status(401).json({ success: false, message: `User ${req.params.id} is not authorized to update this user` });
+        }
+        user = await User.findByIdAndUpdate(req.params.id, req.body, {
+            new: true,
+            runValidators: true
+        });
+        res.status(200).json({
+            success: true,
+            data: user
+        });
     } catch (err) {
         res.status(400).json({ success: false });
     }

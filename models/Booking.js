@@ -1,8 +1,20 @@
 const mongoose = require('mongoose');
 
 const BookingSchema = new mongoose.Schema({
-   apptDate: {
-        type: Date,
+    pickupDate: {
+        type: String,
+        required: true
+    },
+    pickupLocation:{
+        type: String,
+        required: true
+    },
+    returnDate:{
+        type:String,
+        required: true
+    },
+    returnLocation:{
+        type:String,
         required: true
     },
     user: {
@@ -15,10 +27,30 @@ const BookingSchema = new mongoose.Schema({
         ref:'Car',
         required: true
     },
-    createdAt: {
-        type: Date ,
-        default: Date.now
+    numberOfDays:{
+        type:Number,
+    },
+    assumePrice:{
+        type:Number,
+    },
+    carId:{
+        type:String,
+    },
+    carModel:{
+        type:String,
     }
 });
 
 module.exports = mongoose.model('Booking', BookingSchema);
+
+// _id?: string
+//   carId: string
+//   carModel: string
+//   : number
+//   : number
+//   : string
+//   : string
+//  : string
+//   : string
+//   user?: string
+//   car?: CarItem
