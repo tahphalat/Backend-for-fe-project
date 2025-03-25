@@ -1,5 +1,5 @@
-const nocache = require("nocacheA");
-app.use(nocache());
+// const nocache = require("nocacheA");
+// app.use(nocache());
 
 
 const express = require('express');
