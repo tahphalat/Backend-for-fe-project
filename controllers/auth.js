@@ -68,7 +68,12 @@ const sentTokenResponse = (user, statusCode, res) => {
         options.secure = true;
     }
 
-    res.status(statusCode).cookie('token', token, options).json({ success: true, token });
+    res.status(statusCode).cookie('token', token, options).json({ success: true, _id: user._id,
+        name: user.name,
+        email: user.email,
+        telephone: user.telephone,
+        role: user.role,
+         token });
 };
 
 exports.getMe = async (req, res, next) => {
