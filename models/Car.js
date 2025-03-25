@@ -56,7 +56,7 @@ const CarSchema = new mongoose.Schema(
     },
     doors: {
       type: Number,
-      required: [true, "Please add number of doors"],
+      required: [true, "Please add number of doors."],
     },
     largebags: {
       type: Number,
