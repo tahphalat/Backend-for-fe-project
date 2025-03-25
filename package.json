@@ -21,7 +21,8 @@
     "helmet": "^8.0.0",
     "hpp": "^0.2.3",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^7.6.3"
+    "mongoose": "^7.6.3",
+    "nocache": "^4.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
