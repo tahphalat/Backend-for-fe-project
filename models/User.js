@@ -3,7 +3,7 @@ const bcrypt=require('bcryptjs');
 const jwt=require('jsonwebtoken');
 
 const UserSchema=new mongoose.Schema({
-    name:{
+    model:{
         type:String,
         required:[true,'Please add a name']
     },
