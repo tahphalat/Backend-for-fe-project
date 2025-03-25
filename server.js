@@ -1,3 +1,7 @@
+const nocache = require("nocacheA");
+app.use(nocache());
+
+
 const express = require('express');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
@@ -48,8 +52,7 @@ app.use('/api/v1/auth', auth);
 app.use(cookieParser());
 
 
-const nocache = require("nocacheA");
-app.use(nocache());
+
 
 
 const PORT = process.env.PORT || 5000;
